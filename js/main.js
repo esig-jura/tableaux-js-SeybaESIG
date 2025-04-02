@@ -37,3 +37,43 @@ const personnes = [
         localite: 'San Francisco',
     }
 ];
+
+const tableBody = document.querySelector("tbody");
+
+/**
+ * Afficher les personnes dans le tableau
+ **/
+function affichePersonnes() {
+    tableBody.innerHTML = '';
+    for (let person of personnes) {
+        tableBody.innerHTML +=
+            `<tr>
+                <td>${person.prenom}</td>
+                <td>${person.nom}</td>
+                <td>${person.age}</td>
+                <td>${person.localite}</td>
+             </tr>`;
+    }
+}
+
+/**
+ * Ajouter une personne au tableau
+ * @param {Event} event
+ **/
+function ajouterPersonne(event){
+    event.preventDefault();
+    const form = event.target;
+
+    const prenom = form.prenom.value;
+    const nom = form.nom.value;
+    const age = form.age.value;
+    const localite = form.localite.value;
+
+    personnes.push({prenom, nom, age, localite});
+    affichePersonnes();
+    form.reset();
+}
+
+// Event listeners
+window.addEventListener('load', affichePersonnes);
+window.addEventListener('submit', ajouterPersonne)

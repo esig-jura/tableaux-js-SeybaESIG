@@ -39,14 +39,16 @@ const personnes = [
 ];
 
 
-const tableBody = document.querySelector("tbody");
+const tableBody = document.querySelector('tbody');
 
 /**
  * Afficher les personnes dans le tableau
+ * @param {Array} listePersonnes
+ * returns {void}
  **/
-function affichePersonnes() {
+function affichePersonnes(listePersonnes) {
     tableBody.innerHTML = '';
-    for (let person of personnes) {
+    for (let person of listePersonnes) {
         tableBody.innerHTML +=
             `<tr>
                 <td>${person.prenom}</td>
@@ -60,6 +62,7 @@ function affichePersonnes() {
 /**
  * Ajouter une personne au tableau
  * @param {Event} event
+ * returns {void}
  **/
 function ajouterPersonne(event){
     event.preventDefault();
@@ -71,10 +74,49 @@ function ajouterPersonne(event){
     const localite = form.localite.value;
 
     personnes.push({prenom, nom, age, localite});
-    affichePersonnes();
+    affichePersonnes(personnes);
     form.reset();
 }
 
+
+/**
+ * Filtrer les personnes en fonction de l'input actif
+ * @returns {void}
+ */
+function filtrerPersonnes() {
+
+    let form = document.querySelector('form');
+    let activeTextarea = document.activeElement;
+
+    if (activeTextarea === form.prenom) {
+        affichePersonnes(personnes
+            .filter(person => person.prenom.toLowerCase()
+                .includes(form.prenom.value.toLowerCase())));
+
+    } else if (activeTextarea === form.nom) {
+        affichePersonnes(personnes
+            .filter(person => person.nom.toLowerCase()
+                .includes(form.nom.value.toLowerCase())));
+
+    } else if (activeTextarea === form.age) {
+        affichePersonnes(personnes
+            .filter(person => person.age == form.age.value));
+
+    } else if (activeTextarea === form.localite) {
+        affichePersonnes(personnes
+            .filter(person => person.localite.toLowerCase()
+                .includes(form.localite.value.toLowerCase())));
+    }
+}
+
+// Fonction incomplète
+function trierPersonnes() {
+    personnes.sort((a, b) => a.nom.localeCompare(b.nom));
+    affichePersonnes(personnes);
+}
+
 // Event listeners
-window.addEventListener('load', affichePersonnes);
+window.addEventListener('load', affichePersonnes(personnes));
 window.addEventListener('submit', ajouterPersonne)
+window.addEventListener('input', filtrerPersonnes);
+// Ajouter event listener pour trier les personnes

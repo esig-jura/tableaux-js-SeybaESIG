@@ -38,6 +38,7 @@ const personnes = [
     }
 ];
 
+// Sélection du table body
 const tableBody = document.querySelector("tbody");
 
 /**

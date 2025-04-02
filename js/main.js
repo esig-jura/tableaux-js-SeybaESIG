@@ -37,3 +37,23 @@ const personnes = [
         localite: 'San Francisco',
     }
 ];
+
+const tableBody = document.querySelector("tbody");
+console.log(tableBody);
+
+// 1. Afficher le nombre de personnes dans le tableau
+function affichePersonnes() {
+    tableBody.innerHTML = '';
+    for (let person of personnes) {
+        tableBody.innerHTML +=
+            `<tr>
+                <td>${person.prenom}</td>
+                <td>${person.nom}</td>
+                <td>${person.age}</td>
+                <td>${person.localite}</td>
+             </tr>`;
+    }
+}
+
+window.addEventListener('load', affichePersonnes);
+
